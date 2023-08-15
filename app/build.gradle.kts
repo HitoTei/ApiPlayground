@@ -54,6 +54,13 @@ android {
 
 dependencies {
 
+
+    constraints {
+        implementation("androidx.work:work-runtime:2.7.0") {
+            because("previous versions have a bug impacting this application")
+        }
+    }
+
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
@@ -74,10 +81,13 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
     implementation("androidx.hilt:hilt-work:1.0.0")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
-    // json
+    // okhttp, retrofit, gson
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
 
     // 画像読み込み
     implementation("io.coil-kt:coil-compose:2.4.0")
@@ -91,6 +101,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     testImplementation("io.mockk:mockk:1.12.0")
+    implementation("androidx.compose.runtime:runtime-livedata")
+
 }
 
 kapt {
