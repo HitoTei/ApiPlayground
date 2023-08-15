@@ -1,4 +1,4 @@
-package com.example.apiplayground.ui.api_details
+package com.example.apiplayground.ui.api_details.random_dogs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

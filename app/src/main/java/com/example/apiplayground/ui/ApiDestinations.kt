@@ -2,7 +2,8 @@ package com.example.apiplayground.ui
 
 import androidx.compose.runtime.Composable
 import com.example.apiplayground.model.ApiData
-import com.example.apiplayground.ui.api_details.RandomDogsScreen
+import com.example.apiplayground.ui.api_details.emoji_hub.EmojiHubScreen
+import com.example.apiplayground.ui.api_details.random_dogs.RandomDogsScreen
 
 interface ApiDestination {
     val screen: @Composable () -> Unit
@@ -19,6 +20,17 @@ object RandomDogs : ApiDestination {
     )
 }
 
+object EmojiHub : ApiDestination {
+    override val screen = @Composable {
+        EmojiHubScreen()
+    }
+    override val apiData = ApiData(
+        name = "Emoji Hub",
+        description = "絵文字の一覧を取得できる"
+    )
+}
+
 val apiDestinationList = listOf(
     RandomDogs,
+    EmojiHub,
 )
