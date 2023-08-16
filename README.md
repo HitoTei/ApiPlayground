@@ -1,1 +1,6 @@
-[PublicApis](https://github.com/public-apis/public-apis) にあるAPIを使って何か作る
+以下のリポジトリにあるAPIを使って何か作る
+
+- https://github.com/public-apis/public-apis
+
+- https://github.com/public-apis-dev/public-apis
+
