@@ -1,6 +1,7 @@
 package com.example.apiplayground.model.random_dogs
 
 import retrofit2.Retrofit
+import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class RandomDogsRepositoryImpl @Inject constructor() : RandomDogsRepository {
             addConverterFactory(GsonConverterFactory.create())
         }.build()
         val service = retrofit.create(RandomDogsService::class.java)
-        val response = service.getRandomDogs(extensions.joinToString(",")).execute()
-        return response.body()?.url
+        val response = service.getRandomDogs(extensions.joinToString(",")).await()
+        return response.url
     }
 }

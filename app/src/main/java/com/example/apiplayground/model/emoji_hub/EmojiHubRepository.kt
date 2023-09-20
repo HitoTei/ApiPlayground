@@ -1,6 +1,7 @@
 package com.example.apiplayground.model.emoji_hub
 
 import retrofit2.Retrofit
+import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
@@ -15,7 +16,6 @@ class EmojiHubRepositoryImpl @Inject constructor() : EmojiHubRepository {
             addConverterFactory(GsonConverterFactory.create())
         }.build()
         val service = retrofit.create(EmojiHubService::class.java)
-        val response = service.getRandomEmoji().execute()
-        return response.body()!!
+        return service.getRandomEmoji().await()
     }
 }
