@@ -77,10 +77,10 @@ dependencies {
 
     val hiltVersion = "2.47"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    ksp("com.google.dagger:hilt-android-compiler:$hiltVersion")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
     implementation("androidx.hilt:hilt-work:1.0.0")
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
+    ksp("androidx.hilt:hilt-compiler:1.0.0")
 
     // okhttp, retrofit, gson
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
