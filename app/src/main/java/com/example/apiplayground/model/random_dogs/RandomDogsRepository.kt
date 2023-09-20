@@ -8,13 +8,13 @@ import javax.inject.Inject
 interface RandomDogsRepository {
     suspend fun getRandomDogsUrl(
         extensions: List<String>
-    ): String?
+    ): String
 }
 
 class RandomDogsRepositoryImpl @Inject constructor() : RandomDogsRepository {
     override suspend fun getRandomDogsUrl(
         extensions: List<String>
-    ): String? {
+    ): String {
         val retrofit = Retrofit.Builder().apply {
             baseUrl("https://random.dog/")
             addConverterFactory(GsonConverterFactory.create())
