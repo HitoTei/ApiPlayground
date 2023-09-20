@@ -3,6 +3,7 @@ package com.example.apiplayground.ui
 import androidx.compose.runtime.Composable
 import com.example.apiplayground.model.ApiData
 import com.example.apiplayground.ui.api_details.emoji_hub.EmojiHubScreen
+import com.example.apiplayground.ui.api_details.gutendex.GutendexScreen
 import com.example.apiplayground.ui.api_details.random_dogs.RandomDogsScreen
 
 interface ApiDestination {
@@ -30,7 +31,19 @@ object EmojiHub : ApiDestination {
     )
 }
 
+object Gutendex : ApiDestination {
+    override val screen = @Composable {
+        GutendexScreen()
+    }
+
+    override val apiData = ApiData(
+        name = "Gutendex",
+        description = "書籍の一覧を取得できる"
+    )
+}
+
 val apiDestinationList = listOf(
     RandomDogs,
     EmojiHub,
+    Gutendex
 )
