@@ -6,7 +6,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 interface GutendexRepository {
-    suspend fun getBookList(): GutendexResponse
+    suspend fun getBookList(
+        search: String? = null,
+    ): GutendexResponse
+
+    suspend fun getBookListFromUrl(url: String): GutendexResponse
 }
 
 class GutendexRepositoryImpl @Inject constructor() : GutendexRepository {
@@ -19,8 +23,15 @@ class GutendexRepositoryImpl @Inject constructor() : GutendexRepository {
         return retrofit.create(GutendexService::class.java)
     }
 
-    override suspend fun getBookList(): GutendexResponse {
+    override suspend fun getBookList(
+        search: String?
+    ): GutendexResponse {
         val service = createService()
-        return service.getBookList().await()
+        return service.getBookList(search).await()
+    }
+
+    override suspend fun getBookListFromUrl(url: String): GutendexResponse {
+        val service = createService()
+        return service.getBookListFromUrl(url).await()
     }
 }
