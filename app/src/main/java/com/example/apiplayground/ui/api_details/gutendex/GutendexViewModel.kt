@@ -3,13 +3,14 @@ package com.example.apiplayground.ui.api_details.gutendex
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apiplayground.model.gutendex.GutendexRepository
 import com.example.apiplayground.model.gutendex.GutendexResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,33 +19,28 @@ import javax.inject.Inject
 class GutendexViewModel @Inject constructor(
     private val repository: GutendexRepository
 ) : ViewModel() {
-    val bookResponse: MutableLiveData<GutendexResponse?> by lazy {
-        MutableLiveData<GutendexResponse?>(
-            null
-        )
-    }
 
-    val searchString: MutableLiveData<String> by lazy {
-        MutableLiveData<String>(
-            ""
-        )
-    }
+    private val bookResponseStateFlow = MutableStateFlow<GutendexResponse?>(null)
+    val bookResponse: Flow<GutendexResponse?> = bookResponseStateFlow
+
+    private val searchStringStateFlow = MutableStateFlow("")
+    val searchString: Flow<String> = searchStringStateFlow
 
     fun onSearchStringChange(newSearchString: String) {
-        searchString.postValue(newSearchString)
+        searchStringStateFlow.value = newSearchString
     }
 
-    fun getBookList() {
+    fun getBookList(search: String = "") {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.getBookList(searchString.value)
-            bookResponse.postValue(response)
+            val response = repository.getBookList(search)
+            bookResponseStateFlow.value = response
         }
     }
 
     fun getBookListFromUrl(url: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getBookListFromUrl(url)
-            bookResponse.postValue(response)
+            bookResponseStateFlow.value = response
         }
     }
 

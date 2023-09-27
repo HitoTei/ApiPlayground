@@ -5,15 +5,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun EmojiHubScreen(
     viewModel: EmojiHubViewModel = hiltViewModel()
 ) {
-    val emojiList by viewModel.emojiList.observeAsState()
+    val emojiList by viewModel.emojiList.collectAsState(null)
 
     Column {
         TextButton(onClick = { viewModel.getEmojiList() }) {

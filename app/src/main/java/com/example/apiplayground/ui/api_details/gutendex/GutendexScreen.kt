@@ -28,8 +28,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,8 +48,8 @@ fun GutendexScreen(
     modifier: Modifier = Modifier,
     viewModel: GutendexViewModel = hiltViewModel(),
 ) {
-    val response by viewModel.bookResponse.observeAsState()
-    val search by viewModel.searchString.observeAsState("")
+    val response by viewModel.bookResponse.collectAsState(null)
+    val search by viewModel.searchString.collectAsState("")
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     Scaffold(
@@ -73,7 +73,7 @@ fun GutendexScreen(
             modifier = Modifier.padding(it),
             response = response,
             search = search,
-            getBookList = viewModel::getBookList,
+            getBookList = { viewModel.getBookList(search) },
             getBookListFromUrl = viewModel::getBookListFromUrl,
             onSearchStringChange = viewModel::onSearchStringChange,
             openBookUrl = viewModel::openBookUrl,
@@ -149,8 +149,8 @@ fun GutendexContent(
                 }
             }
         }
-        response?.let { response ->
-            items(response.results) {
+        response?.run {
+            items(results) {
                 GutendexItem(title = it.title,
                     subjects = it.subjects,
                     formats = it.formats,

@@ -7,20 +7,24 @@ import com.example.apiplayground.model.emoji_hub.EmojiHubRepository
 import com.example.apiplayground.model.emoji_hub.EmojiHubResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EmojiHubViewModel @Inject constructor(private val repository: EmojiHubRepository) :
     ViewModel() {
-    val emojiList: MutableLiveData<EmojiHubResponse?> by lazy {
-        MutableLiveData<EmojiHubResponse?>(null)
-    }
+
+    private val emojiListStateFlow = MutableStateFlow<EmojiHubResponse?>(null)
+    val emojiList: Flow<EmojiHubResponse?> = emojiListStateFlow
 
     fun getEmojiList() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getRandomEmoji()
-            emojiList.postValue(response)
+            emojiListStateFlow.value = response
         }
     }
 

@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +18,7 @@ import coil.decode.ImageDecoderDecoder
 
 @Composable
 fun RandomDogsScreen(viewModel: RandomDogsViewModel = hiltViewModel()) {
-    val dogMediaUrl by viewModel.dogMediaUrl.observeAsState()
+    val dogMediaUrl by viewModel.dogMediaUrl.collectAsState(null)
 
 
     Column {
