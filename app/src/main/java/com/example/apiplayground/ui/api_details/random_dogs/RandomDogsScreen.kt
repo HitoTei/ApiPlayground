@@ -1,7 +1,9 @@
 package com.example.apiplayground.ui.api_details.random_dogs
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -19,7 +21,16 @@ import coil.decode.ImageDecoderDecoder
 @Composable
 fun RandomDogsScreen(viewModel: RandomDogsViewModel = hiltViewModel()) {
     val dogMediaUrl by viewModel.dogMediaUrl.collectAsState(null)
+    val waiting by viewModel.waiting.collectAsState(false)
 
+    if (waiting) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    }
 
     Column {
         TextButton(

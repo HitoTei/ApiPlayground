@@ -2,6 +2,7 @@ package com.example.apiplayground.ui.api_details.gutendex
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -50,8 +52,10 @@ fun GutendexScreen(
 ) {
     val response by viewModel.bookResponse.collectAsState(null)
     val search by viewModel.searchString.collectAsState("")
+    val waiting by viewModel.waiting.collectAsState(false)
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
+
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
@@ -69,6 +73,16 @@ fun GutendexScreen(
             }
         }
     ) {
+
+        if (waiting) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
         GutendexContent(
             modifier = Modifier.padding(it),
             response = response,

@@ -21,10 +21,15 @@ class EmojiHubViewModel @Inject constructor(private val repository: EmojiHubRepo
     private val emojiListStateFlow = MutableStateFlow<EmojiHubResponse?>(null)
     val emojiList: Flow<EmojiHubResponse?> = emojiListStateFlow
 
+    private val waitingStateFlow = MutableStateFlow(false)
+    val waiting: Flow<Boolean> = waitingStateFlow.asStateFlow()
+
     fun getEmojiList() {
+        waitingStateFlow.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getRandomEmoji()
             emojiListStateFlow.value = response
+            waitingStateFlow.value = false
         }
     }
 
